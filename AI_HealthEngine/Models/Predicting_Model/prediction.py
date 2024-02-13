@@ -19,6 +19,9 @@ with open('./pkl_files/rf_model.pkl', 'rb') as f:
 with open('./pkl_files/data_dict.pkl', 'rb') as f:
     data_dict = pickle.load(f)
 
+with open('./pkl_files/Doctor_Specialist_Model.pkl', 'rb') as f:
+    specialization = pickle.load(f)
+
 # prediction function
 def predictDisease(symptoms):
     input_data = [0] * len(data_dict["symptom_index"])
@@ -84,6 +87,12 @@ def diseasePrediction(predicted_disease):
         else:
             print(f"Precautions for {predicted_disease} not found.")
 
+def recommend(predicted_disease): 
+    if predicted_disease in specialization:
+        print (f"For {predicted_disease}, recommend consulting a {specialization[predicted_disease]}.")
+    else:
+        print (f"No specific recommendation found for {predicted_disease}.")
+
 #TUser input ----> symptoms
 Input_Symptoms = input('Enter the Symptoms (comma-separated): ')
 disease = predictDisease(Input_Symptoms.split(','))
@@ -94,4 +103,4 @@ print(f'Predicted Disease: {predicted_disease}')
 print(f'Your symptoms: {Input_Symptoms}')
 diseaseDescription(predicted_disease)
 diseasePrediction(predicted_disease)
-
+recommend(predicted_disease)
